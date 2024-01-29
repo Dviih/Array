@@ -31,3 +31,7 @@ func (chanArray *ChanArray[T]) Append(t T) bool {
 	return true
 }
 
+func (chanArray *ChanArray[T]) Get(name string) chan T {
+	return chanArray.channels.Get(name)
+}
+
