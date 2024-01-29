@@ -36,3 +36,21 @@ func (syncArray *SyncArray[T]) Remove(i int) bool {
 	return true
 }
 
+func (syncArray *SyncArray[T]) Each(fn func(T) bool) bool {
+	if syncArray == nil {
+		return false
+	}
+
+	syncArray.m.RLock()
+
+	for _, t := range syncArray.m.Data {
+		if t.Empty() || !fn(t) {
+			syncArray.m.RUnlock()
+			return false
+		}
+	}
+
+	syncArray.m.RUnlock()
+
+	return true
+}
