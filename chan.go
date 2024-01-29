@@ -15,3 +15,19 @@ func (chanArray *ChanArray[T]) Create(name string, size int) chan T {
 	return c
 }
 
+func (chanArray *ChanArray[T]) Append(t T) bool {
+	if chanArray == nil {
+		return false
+	}
+
+	chanArray.m.Add(len(chanArray.m.Data), t)
+	chanArray.channels.RLock()
+
+	for _, channel := range chanArray.channels.Data {
+		channel <- t
+	}
+
+	chanArray.channels.RUnlock()
+	return true
+}
+
