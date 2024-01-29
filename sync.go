@@ -12,3 +12,13 @@ func (syncArray *SyncArray[T]) Index(i int) T {
 	return syncArray.m.Get(i)
 }
 
+func (syncArray *SyncArray[T]) Append(t T) bool {
+	if syncArray == nil {
+		return false
+	}
+
+	syncArray.m.Add(len(syncArray.m.Data), t)
+
+	return true
+}
+
