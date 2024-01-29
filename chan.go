@@ -35,3 +35,14 @@ func (chanArray *ChanArray[T]) Get(name string) chan T {
 	return chanArray.channels.Get(name)
 }
 
+func (chanArray *ChanArray[T]) Close(name string) bool {
+	c := chanArray.Get(name)
+	if c == nil {
+		return false
+	}
+
+	close(c)
+
+	chanArray.channels.Del(name)
+	return true
+}
