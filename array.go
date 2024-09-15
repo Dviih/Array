@@ -40,4 +40,11 @@ func (array *Array[T]) Cap() int {
 	return cap(array.array)
 }
 
+func (array *Array[T]) Append(t ...T) {
+	defer array.m.Unlock()
+	array.m.Lock()
+
+	array.array = append(array.array, t...)
+}
+
 }
