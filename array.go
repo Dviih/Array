@@ -28,4 +28,8 @@ type Array[T interface{}] struct {
 	array []T
 }
 
+func (array *Array[T]) Index(i int) T {
+	return array.array[i]
+}
+
 }
