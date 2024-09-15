@@ -36,4 +36,8 @@ func (array *Array[T]) Len() int {
 	return len(array.array)
 }
 
+func (array *Array[T]) Cap() int {
+	return cap(array.array)
+}
+
 }
