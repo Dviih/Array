@@ -19,7 +19,11 @@
 
 package Array
 
+type Chan[T interface{}] struct {
+	array Array[T]
 
+	sender chan T
+	closed bool
 }
 
 
