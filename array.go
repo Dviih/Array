@@ -47,4 +47,11 @@ func (array *Array[T]) Append(t ...T) {
 	array.array = append(array.array, t...)
 }
 
+func (array *Array[T]) Remove(i int) {
+	defer array.m.Unlock()
+	array.m.Lock()
+
+	array.array = append(array.array[:i], array.array[i+1:]...)
+}
+
 }
