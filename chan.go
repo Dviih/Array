@@ -63,6 +63,10 @@ func (_chan *Chan[T]) Receive() <-chan T {
 	return c
 }
 
+func (_chan *Chan[T]) Close() {
+	if _chan.sender != nil {
+		close(_chan.sender)
 	}
 
+	_chan.closed = true
 }
