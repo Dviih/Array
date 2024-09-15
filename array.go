@@ -32,4 +32,8 @@ func (array *Array[T]) Index(i int) T {
 	return array.array[i]
 }
 
+func (array *Array[T]) Len() int {
+	return len(array.array)
+}
+
 }
