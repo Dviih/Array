@@ -19,43 +19,27 @@
 
 package Array
 
-import (
-	"sync"
-)
-
-type Array[T interface{}] struct {
-	m     sync.Mutex
-	array []T
+// Deprecated: Array or Chan
+type Interface[T interface{}] interface {
+	Empty() bool
 }
 
-func (array *Array[T]) Index(i int) T {
-	return array.array[i]
+// Deprecated: Array
+type SyncArray[T interface{}] struct {
+	Array[T]
 }
 
-func (array *Array[T]) Len() int {
-	return len(array.array)
+func (syncArray *SyncArray[T]) Append(t T) bool {
+	syncArray.Append(t)
+	return true
 }
 
-func (array *Array[T]) Cap() int {
-	return cap(array.array)
+func (syncArray *SyncArray[T]) Remove(i int) bool {
+	syncArray.Remove(i)
+	return true
 }
 
-func (array *Array[T]) Append(t ...T) {
-	defer array.m.Unlock()
-	array.m.Lock()
-
-	array.array = append(array.array, t...)
-}
-
-func (array *Array[T]) Remove(i int) {
-	defer array.m.Unlock()
-	array.m.Lock()
-
-	array.array = append(array.array[:i], array.array[i+1:]...)
-}
-
-func (array *Array[T]) Each(fn func(T) bool) {
-	for _, t := range array.array {
-		fn(t)
-	}
+func (syncArray *SyncArray[T]) Each(fn func(T) bool) bool {
+	syncArray.Each(fn)
+	return true
 }

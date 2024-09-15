@@ -19,43 +19,25 @@
 
 package Array
 
-import (
-	"sync"
-)
-
-type Array[T interface{}] struct {
-	m     sync.Mutex
-	array []T
+// Deprecated: Chan
+type ChanArray[T interface{}] struct {
+	Chan[T]
 }
 
-func (array *Array[T]) Index(i int) T {
-	return array.array[i]
+func (chanArray *ChanArray[T]) Create(_ string, _ int) chan T {
+	return chanArray.Get("")
 }
 
-func (array *Array[T]) Len() int {
-	return len(array.array)
+func (chanArray *ChanArray[T]) Append(t T) bool {
+	chanArray.Chan.Send(t)
+	return true
 }
 
-func (array *Array[T]) Cap() int {
-	return cap(array.array)
+func (chanArray *ChanArray[T]) Get(_ string) chan T {
+	return chanArray.sender
 }
 
-func (array *Array[T]) Append(t ...T) {
-	defer array.m.Unlock()
-	array.m.Lock()
-
-	array.array = append(array.array, t...)
-}
-
-func (array *Array[T]) Remove(i int) {
-	defer array.m.Unlock()
-	array.m.Lock()
-
-	array.array = append(array.array[:i], array.array[i+1:]...)
-}
-
-func (array *Array[T]) Each(fn func(T) bool) {
-	for _, t := range array.array {
-		fn(t)
-	}
+func (chanArray *ChanArray[T]) Close(_ string) bool {
+	chanArray.Chan.Close()
+	return true
 }
