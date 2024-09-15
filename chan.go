@@ -39,6 +39,7 @@ func (_chan *Chan[T]) Send(t ...T) {
 		_chan.array = &Array[T]{}
 	}
 
+	_chan.array.Append(t...)
 	for _, v := range t {
 		_chan.sender <- v
 	}
