@@ -19,4 +19,13 @@
 
 package Array
 
+import (
+	"sync"
+)
+
+type Array[T interface{}] struct {
+	m     sync.Mutex
+	array []T
+}
+
 }
