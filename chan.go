@@ -26,8 +26,19 @@ type Chan[T interface{}] struct {
 	closed bool
 }
 
-
+func (_chan *Chan[T]) Send(t ...T) {
+	if _chan.closed {
+		return
 	}
+
+	if _chan.sender == nil {
+		_chan.sender = make(chan T)
+	}
+
+	for _, v := range t {
+		_chan.sender <- v
+	}
+}
 
 
 	}
