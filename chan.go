@@ -40,10 +40,27 @@ func (_chan *Chan[T]) Send(t ...T) {
 	}
 }
 
-
+func (_chan *Chan[T]) Receive() <-chan T {
+	if _chan.closed {
+		return nil
 	}
 
+	if _chan.sender == nil {
+		_chan.sender = make(chan T)
+	}
 
+	c := make(chan T)
+
+	go func() {
+		for {
+			select {
+			case data := <-_chan.sender:
+				c <- data
+			}
+		}
+	}()
+
+	return c
 }
 
 	}
