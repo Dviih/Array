@@ -86,3 +86,7 @@ func TestChan(t *testing.T) {
 func TestChanClose(t *testing.T) {
 	_chan.Close()
 }
+
+func TestChanArray(t *testing.T) {
+	t.Logf("Returned from index 0: %+v", _chan.Array().Index(0))
+}

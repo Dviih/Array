@@ -26,6 +26,8 @@ import (
 type Array[T interface{}] struct {
 	m     sync.Mutex
 	array []T
+
+	readonly bool
 }
 
 func (array *Array[T]) Index(i int) T {
@@ -41,6 +43,10 @@ func (array *Array[T]) Cap() int {
 }
 
 func (array *Array[T]) Append(t ...T) {
+	if array.readonly {
+		return
+	}
+
 	defer array.m.Unlock()
 	array.m.Lock()
 
@@ -48,6 +54,10 @@ func (array *Array[T]) Append(t ...T) {
 }
 
 func (array *Array[T]) Remove(i int) {
+	if array.readonly {
+		return
+	}
+
 	defer array.m.Unlock()
 	array.m.Lock()
 

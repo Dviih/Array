@@ -20,7 +20,7 @@
 package Array
 
 type Chan[T interface{}] struct {
-	array Array[T]
+	array *Array[T]
 
 	sender chan T
 	closed bool
@@ -35,6 +35,11 @@ func (_chan *Chan[T]) Send(t ...T) {
 		_chan.sender = make(chan T)
 	}
 
+	if _chan.array == nil {
+		_chan.array = &Array[T]{}
+	}
+
+	_chan.array.Append(t...)
 	for _, v := range t {
 		_chan.sender <- v
 	}
@@ -69,4 +74,20 @@ func (_chan *Chan[T]) Close() {
 	}
 
 	_chan.closed = true
+}
+
+func (_chan *Chan[T]) Array() *Array[T] {
+	if !_chan.closed {
+		panic("sender must be closed to be returned")
+	}
+
+	if _chan.array == nil {
+		_chan.array = &Array[T]{}
+	}
+
+	// To make sure no other operation will run even with the readonly flag.
+	_chan.array.m.Lock()
+	_chan.array.readonly = true
+
+	return _chan.array
 }
