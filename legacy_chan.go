@@ -19,18 +19,25 @@
 
 package Array
 
-
+// Deprecated: Chan
+type ChanArray[T interface{}] struct {
+	Chan[T]
 }
 
-
-	}
-
-
-	}
-
-
+func (chanArray *ChanArray[T]) Create(_ string, _ int) chan T {
+	return chanArray.Get("")
 }
 
-	}
+func (chanArray *ChanArray[T]) Append(t T) bool {
+	chanArray.Chan.Send(t)
+	return true
+}
 
+func (chanArray *ChanArray[T]) Get(_ string) chan T {
+	return chanArray.sender
+}
+
+func (chanArray *ChanArray[T]) Close(_ string) bool {
+	chanArray.Chan.Close()
+	return true
 }
