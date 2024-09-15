@@ -54,4 +54,8 @@ func (array *Array[T]) Remove(i int) {
 	array.array = append(array.array[:i], array.array[i+1:]...)
 }
 
+func (array *Array[T]) Each(fn func(T) bool) {
+	for _, t := range array.array {
+		fn(t)
+	}
 }
