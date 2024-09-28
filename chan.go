@@ -72,15 +72,7 @@ func (_chan *Chan[T]) Close() {
 	_chan.closed = true
 }
 
-func (_chan *Chan[T]) Array() *Array[T] {
-	if !_chan.closed {
-		panic("sender must be closed to be returned")
-	}
-
-	if _chan.array == nil {
-		_chan.array = &Array[T]{}
-	}
 
 
-	return _chan.array
+
 }
