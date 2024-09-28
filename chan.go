@@ -20,7 +20,7 @@
 package Array
 
 type Chan[T interface{}] struct {
-	array *Array[T]
+	array Array[T]
 
 	sender chan T
 	closed bool
@@ -33,10 +33,6 @@ func (_chan *Chan[T]) Send(t ...T) {
 
 	if _chan.sender == nil {
 		_chan.sender = make(chan T)
-	}
-
-	if _chan.array == nil {
-		_chan.array = &Array[T]{}
 	}
 
 	_chan.array.Append(t...)
