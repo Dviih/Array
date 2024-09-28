@@ -72,7 +72,13 @@ func (_chan *Chan[T]) Close() {
 	_chan.closed = true
 }
 
+func (_chan *Chan[T]) Index(i int) T {
+	return _chan.array.Index(i)
+}
 
 
 
+
+func (_chan *Chan[T]) Len() int {
+	return _chan.array.Len()
 }
