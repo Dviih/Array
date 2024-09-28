@@ -85,9 +85,6 @@ func (_chan *Chan[T]) Array() *Array[T] {
 		_chan.array = &Array[T]{}
 	}
 
-	// To make sure no other operation will run even with the readonly flag.
-	_chan.array.m.Lock()
-	_chan.array.readonly = true
 
 	return _chan.array
 }
