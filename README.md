@@ -25,6 +25,9 @@
 - `Send`: Sends T to a channel array.
 - `Receive`: Receives T from a channel from a channel array.
 - `Close`: Closes a channel array.
+- `Index`: Returns an element from array.
+- `Array`: Returns a shallow copy of the array.
+- `Len`: Returns the length of the array.
 
 # Example
 
