@@ -48,8 +48,17 @@ func (array *Array[T]) Append(t ...T) {
 }
 
 func (array *Array[T]) Remove(i int) {
+	if i > array.Len() {
+		return
+	}
+
 	defer array.m.Unlock()
 	array.m.Lock()
+
+	if i == array.Len() {
+		array.array = array.array[:array.Len()-1]
+		return
+	}
 
 	array.array = append(array.array[:i], array.array[i+1:]...)
 }
