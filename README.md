@@ -17,9 +17,10 @@
 - `Index`: Returns an element from array.
 - `Len`: Returns the length of the array.
 - `Cap`: Returns the capacity of the array.
-- `Append`: Appends an element to array.
+- `Append`: Appends an element to the array.
 - `Remove`: Deletes an element from array.
-- `Each`: Ranges through the elements of an array and executes a function.
+- `Each`: Ranges through the elements of the array and executes a function.
+- `Range` - Ranges through the elements of the array including index and executes a function.
 
 ## Channel
 - `Send`: Sends T to a channel array.
