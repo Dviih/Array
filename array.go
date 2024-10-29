@@ -71,5 +71,10 @@ func (array *Array[T]) Each(fn func(T) bool) {
 	}
 }
 
+func (array *Array[T]) Range(fn func(int, T) bool) {
+	for i, t := range array.array {
+		if !fn(i, t) {
+			break
+		}
 	}
 }
