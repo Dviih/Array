@@ -65,6 +65,11 @@ func (array *Array[T]) Remove(i int) {
 
 func (array *Array[T]) Each(fn func(T) bool) {
 	for _, t := range array.array {
-		fn(t)
+		if !fn(t) {
+			break
+		}
+	}
+}
+
 	}
 }
