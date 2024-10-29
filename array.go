@@ -48,14 +48,33 @@ func (array *Array[T]) Append(t ...T) {
 }
 
 func (array *Array[T]) Remove(i int) {
+	if i > array.Len() {
+		return
+	}
+
 	defer array.m.Unlock()
 	array.m.Lock()
+
+	if i == array.Len() {
+		array.array = array.array[:array.Len()-1]
+		return
+	}
 
 	array.array = append(array.array[:i], array.array[i+1:]...)
 }
 
 func (array *Array[T]) Each(fn func(T) bool) {
 	for _, t := range array.array {
-		fn(t)
+		if !fn(t) {
+			break
+		}
+	}
+}
+
+func (array *Array[T]) Range(fn func(int, T) bool) {
+	for i, t := range array.array {
+		if !fn(i, t) {
+			break
+		}
 	}
 }
