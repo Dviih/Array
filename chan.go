@@ -65,3 +65,10 @@ func (_chan *Chan[T]) Array() []T {
 func (_chan *Chan[T]) Len() int {
 	return _chan.array.Len()
 }
+
+func NewChan[T interface{}](options ...Channel.Option) *Chan[T] {
+	return &Chan[T]{
+		array:   New[T](),
+		channel: Channel.New[T](options...),
+	}
+}
