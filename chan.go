@@ -68,15 +68,9 @@ func (_chan *Chan[T]) Index(i int) T {
 	return _chan.array.Index(i)
 }
 
+
 func (_chan *Chan[T]) Array() []T {
-	var ret []T
-
-	_chan.array.Each(func(t T) bool {
-		ret = append(ret, t)
-		return true
-	})
-
-	return ret
+	return _chan.array.Array()
 }
 
 func (_chan *Chan[T]) Len() int {
