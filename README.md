@@ -47,8 +47,10 @@ type Test struct {
 }
 
 func main() {
-	m := Array.Array[*Test]{}
+	m := Array.New[*Test]()
+	
 	m.Append(&Test{Value: "Test Value"})
+	
 	fmt.Println(m.Index(0))
 	m.Remove(0)
 }
