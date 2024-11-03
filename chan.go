@@ -57,6 +57,9 @@ func (_chan *Chan[T]) Index(i int) T {
 	return _chan.array.Index(i)
 }
 
+func (_chan *Chan[T]) Remove(i int) {
+	_chan.array.Remove(i)
+}
 
 func (_chan *Chan[T]) Array() []T {
 	return _chan.array.Array()
