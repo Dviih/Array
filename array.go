@@ -78,3 +78,15 @@ func (array *Array[T]) Range(fn func(int, T) bool) {
 		}
 	}
 }
+
+func (array *Array[T]) Array() []T {
+	var arr []T
+
+	array.Each(func(t T) bool {
+		arr = append(arr, t)
+		return true
+	})
+
+	return arr
+}
+
