@@ -21,12 +21,14 @@
 - `Remove`: Deletes an element from array.
 - `Each`: Ranges through the elements of the array and executes a function.
 - `Range` - Ranges through the elements of the array including index and executes a function.
+- `Array` - Returns a shallow copy of the array.
 
 ## Channel
 - `Send`: Sends T to a channel array.
 - `Receive`: Receives T from a channel from a channel array.
 - `Close`: Closes a channel array.
 - `Index`: Returns an element from array.
+- `Remove`: Removes an element from array.
 - `Array`: Returns a shallow copy of the array.
 - `Len`: Returns the length of the array.
 
