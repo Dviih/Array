@@ -23,8 +23,8 @@ import "github.com/Dviih/Channel"
 
 type Chan[T interface{}] struct {
 	array Array[T]
+	channel *Channel.Channel[T]
 
-	sender chan T
 	closed bool
 }
 
