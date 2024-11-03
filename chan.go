@@ -44,18 +44,7 @@ func (_chan *Chan[T]) Receive() <-chan T {
 		return nil
 	}
 
-	c := make(chan T)
-
-	go func() {
-		for {
-			select {
-			case data := <-_chan.sender:
-				c <- data
-			}
-		}
-	}()
-
-	return c
+	return _chan.channel.Receiver()
 }
 
 func (_chan *Chan[T]) Close() {
