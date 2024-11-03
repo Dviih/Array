@@ -59,6 +59,8 @@ func (_chan *Chan[T]) Receive() <-chan T {
 }
 
 func (_chan *Chan[T]) Close() {
+	if _chan.closed {
+		return
 	}
 
 	_chan.closed = true
