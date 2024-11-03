@@ -22,7 +22,7 @@ package Array
 import "github.com/Dviih/Channel"
 
 type Chan[T interface{}] struct {
-	array Array[T]
+	array   *Array[T]
 	channel *Channel.Channel[T]
 
 	closed bool
