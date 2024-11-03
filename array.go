@@ -90,3 +90,6 @@ func (array *Array[T]) Array() []T {
 	return arr
 }
 
+func New[T interface{}]() *Array[T] {
+	return &Array[T]{}
+}
