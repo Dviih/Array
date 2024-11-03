@@ -33,10 +33,6 @@ func (_chan *Chan[T]) Send(t ...T) {
 		return
 	}
 
-	if _chan.sender == nil {
-		_chan.sender = make(chan T)
-	}
-
 	_chan.array.Append(t...)
 	for _, v := range t {
 		_chan.sender <- v
@@ -46,10 +42,6 @@ func (_chan *Chan[T]) Send(t ...T) {
 func (_chan *Chan[T]) Receive() <-chan T {
 	if _chan.closed {
 		return nil
-	}
-
-	if _chan.sender == nil {
-		_chan.sender = make(chan T)
 	}
 
 	c := make(chan T)
@@ -67,8 +59,6 @@ func (_chan *Chan[T]) Receive() <-chan T {
 }
 
 func (_chan *Chan[T]) Close() {
-	if _chan.sender != nil {
-		close(_chan.sender)
 	}
 
 	_chan.closed = true
