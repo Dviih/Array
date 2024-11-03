@@ -19,10 +19,12 @@
 
 package Array
 
-type Chan[T interface{}] struct {
-	array Array[T]
+import "github.com/Dviih/Channel"
 
-	sender chan T
+type Chan[T interface{}] struct {
+	array   *Array[T]
+	channel *Channel.Channel[T]
+
 	closed bool
 }
 
@@ -31,14 +33,8 @@ func (_chan *Chan[T]) Send(t ...T) {
 		return
 	}
 
-	if _chan.sender == nil {
-		_chan.sender = make(chan T)
-	}
-
 	_chan.array.Append(t...)
-	for _, v := range t {
-		_chan.sender <- v
-	}
+	_chan.channel.Send(t...)
 }
 
 func (_chan *Chan[T]) Receive() <-chan T {
@@ -46,27 +42,12 @@ func (_chan *Chan[T]) Receive() <-chan T {
 		return nil
 	}
 
-	if _chan.sender == nil {
-		_chan.sender = make(chan T)
-	}
-
-	c := make(chan T)
-
-	go func() {
-		for {
-			select {
-			case data := <-_chan.sender:
-				c <- data
-			}
-		}
-	}()
-
-	return c
+	return _chan.channel.Receiver()
 }
 
 func (_chan *Chan[T]) Close() {
-	if _chan.sender != nil {
-		close(_chan.sender)
+	if _chan.closed {
+		return
 	}
 
 	_chan.closed = true
@@ -76,17 +57,18 @@ func (_chan *Chan[T]) Index(i int) T {
 	return _chan.array.Index(i)
 }
 
+
 func (_chan *Chan[T]) Array() []T {
-	var ret []T
-
-	_chan.array.Each(func(t T) bool {
-		ret = append(ret, t)
-		return true
-	})
-
-	return ret
+	return _chan.array.Array()
 }
 
 func (_chan *Chan[T]) Len() int {
 	return _chan.array.Len()
+}
+
+func NewChan[T interface{}](options ...Channel.Option) *Chan[T] {
+	return &Chan[T]{
+		array:   New[T](),
+		channel: Channel.New[T](options...),
+	}
 }
