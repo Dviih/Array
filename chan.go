@@ -34,9 +34,7 @@ func (_chan *Chan[T]) Send(t ...T) {
 	}
 
 	_chan.array.Append(t...)
-	for _, v := range t {
-		_chan.sender <- v
-	}
+	_chan.channel.Send(t...)
 }
 
 func (_chan *Chan[T]) Receive() <-chan T {
