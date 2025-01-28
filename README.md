@@ -3,6 +3,11 @@
 
 ---
 
+# Deprecation notice
+### This project was originally created to serve as an addon to `sync` with arrays with a very weird approach. This project was merged under [sync](https://github.com/Dviih/sync) as `sync.Slice[T]` and uses a slice with a mutex for its operations.
+
+---
+
 ## Array
 ### This implements an array backed by a `sync.Mutex`.
 
